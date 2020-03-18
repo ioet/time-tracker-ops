@@ -1,0 +1,45 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "apis_timetracker_api_path": {
+            "value": null
+        },
+        "subscriptions_5e69bbcb6f34000053070001_displayName": {
+            "value": null
+        },
+        "subscriptions_5e69bbcc6f34000053070002_displayName": {
+            "value": null
+        },
+        "users_1_lastName": {
+            "value": null
+        },
+        "service_time_tracker_name": {
+            "value": null
+        }
+    }
+}
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "name": {
+            "value": "time-tracker"
+        },
+        "location": {
+            "value": "northcentralus"
+        },
+        "adminEmail": {
+            "value": "darmijos@azureioet.onmicrosoft.com"
+        },
+        "orgName": {
+            "value": "ioet"
+        },
+        "tier": {
+            "value": "Developer"
+        },
+        "capacity": {
+            "value": 1
+        }
+    }
+}
