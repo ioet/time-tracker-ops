@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "sites_TimeTracker_API_name": {
+            "value": "TimeTracker-API"
+        },
+        "serverfarms_ASP_TimeTracker_API_9685_name": {
+            "value": "ASP-TimeTracker-API-9685"
+        },
+        "registries_TimeTrackerACR_name": {
+            "value": "TimeTrackerACR"
+        },
+        "databaseAccounts_time_tracker_db_name": {
+            "value": "time-tracker-db"
+        },
+        "smartdetectoralertrules_failure_anomalies___timetracker_api_name": {
+            "value": "failure anomalies - timetracker-api"
+        },
+        "components_timetracker_api_externalid": {
+            "value": "/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourceGroups/eys-training-api/providers/microsoft.insights/components/timetracker-api"
+        },
+        "actiongroups_application_insights_smart_detection_externalid": {
+            "value": "/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourceGroups/test2/providers/microsoft.insights/actiongroups/application insights smart detection"
+        }
+    }
+}
