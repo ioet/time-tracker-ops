@@ -6,8 +6,16 @@
             "defaultValue": "TimeTracker-API",
             "type": "String"
         },
-        "serverfarms_ASP_TimeTracker_API_9685_name": {
-            "defaultValue": "ASP-TimeTracker-API-9685",
+        "components_TimeTracker_API_name": {
+            "defaultValue": "TimeTracker-API",
+            "type": "String"
+        },
+        "vaults_time_tracker_secrets_name": {
+            "defaultValue": "time-tracker-secrets",
+            "type": "String"
+        },
+        "serverfarms_TimeTracker_API_plan_name": {
+            "defaultValue": "TimeTracker-API-plan",
             "type": "String"
         },
         "registries_TimeTrackerACR_name": {
@@ -18,12 +26,12 @@
             "defaultValue": "time-tracker-db",
             "type": "String"
         },
-        "smartdetectoralertrules_failure_anomalies___timetracker_api_name": {
-            "defaultValue": "failure anomalies - timetracker-api",
+        "configurationStores_time_tracker_config_name": {
+            "defaultValue": "time-tracker-config",
             "type": "String"
         },
-        "components_timetracker_api_externalid": {
-            "defaultValue": "/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourceGroups/eys-training-api/providers/microsoft.insights/components/timetracker-api",
+        "smartdetectoralertrules_failure_anomalies___timetracker_api_name": {
+            "defaultValue": "failure anomalies - timetracker-api",
             "type": "String"
         },
         "actiongroups_application_insights_smart_detection_externalid": {
@@ -34,31 +42,15 @@
     "variables": {},
     "resources": [
         {
-            "type": "microsoft.alertsmanagement/smartdetectoralertrules",
-            "apiVersion": "2019-06-01",
-            "name": "[parameters('smartdetectoralertrules_failure_anomalies___timetracker_api_name')]",
-            "location": "global",
+            "type": "Microsoft.AppConfiguration/configurationStores",
+            "apiVersion": "2019-11-01-preview",
+            "name": "[parameters('configurationStores_time_tracker_config_name')]",
+            "location": "southcentralus",
+            "sku": {
+                "name": "free"
+            },
             "properties": {
-                "description": "Failure Anomalies notifies you of an unusual rise in the rate of failed HTTP requests or dependency calls.",
-                "state": "Enabled",
-                "severity": "Sev3",
-                "frequency": "PT1M",
-                "detector": {
-                    "id": "FailureAnomaliesDetector",
-                    "name": "Failure Anomalies",
-                    "description": "Detects if your application experiences an abnormal rise in the rate of HTTP requests or dependency calls that are reported as failed. The anomaly detection uses machine learning algorithms and occurs in near real time, therefore there's no need to define a frequency for this signal.<br/></br/>To help you triage and diagnose the problem, an analysis of the characteristics of the failures and related telemetry is provided with the detection. This feature works for any app, hosted in the cloud or on your own servers, that generates request or dependency telemetry - for example, if you have a worker role that calls <a class=\"ext-smartDetecor-link\" href=\\\"https://docs.microsoft.com/azure/application-insights/app-insights-api-custom-events-metrics#trackrequest\\\" target=\\\"_blank\\\">TrackRequest()</a> or <a class=\"ext-smartDetecor-link\" href=\\\"https://docs.microsoft.com/azure/application-insights/app-insights-api-custom-events-metrics#trackdependency\\\" target=\\\"_blank\\\">TrackDependency()</a>.<br/><br/><a class=\"ext-smartDetecor-link\" href=\\\"https://docs.microsoft.com/azure/azure-monitor/app/proactive-failure-diagnostics\\\" target=\\\"_blank\\\">Learn more about Failure Anomalies</a>",
-                    "supportedResourceTypes": [
-                        "ApplicationInsights"
-                    ]
-                },
-                "scope": [
-                    "[parameters('components_timetracker_api_externalid')]"
-                ],
-                "actionGroups": {
-                    "groupIds": [
-                        "[parameters('actiongroups_application_insights_smart_detection_externalid')]"
-                    ]
-                }
+                "encryption": {}
             }
         },
         {
@@ -130,9 +122,102 @@
             }
         },
         {
+            "type": "microsoft.insights/components",
+            "apiVersion": "2015-05-01",
+            "name": "[parameters('components_TimeTracker_API_name')]",
+            "location": "southcentralus",
+            "tags": {
+                "hidden-link:/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourceGroups/eys-training-api/providers/Microsoft.Web/sites/TimeTracker-API": "Resource"
+            },
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web",
+                "Request_Source": "AzureTfsExtensionAzureProject"
+            }
+        },
+        {
+            "type": "Microsoft.KeyVault/vaults",
+            "apiVersion": "2016-10-01",
+            "name": "[parameters('vaults_time_tracker_secrets_name')]",
+            "location": "southcentralus",
+            "tags": {
+                "createdBy": "ops-team",
+                "description": "TimeTracker's resources",
+                "RG": "eys-training-api"
+            },
+            "properties": {
+                "sku": {
+                    "family": "A",
+                    "name": "Standard"
+                },
+                "tenantId": "03bd1282-12ae-43f3-8ce1-227ddda1931f",
+                "accessPolicies": [
+                    {
+                        "tenantId": "03bd1282-12ae-43f3-8ce1-227ddda1931f",
+                        "objectId": "3e77a464-e12f-4ae0-b30a-f7b0ae4674dd",
+                        "permissions": {
+                            "keys": [],
+                            "secrets": [
+                                "List",
+                                "Get"
+                            ],
+                            "certificates": []
+                        }
+                    },
+                    {
+                        "tenantId": "03bd1282-12ae-43f3-8ce1-227ddda1931f",
+                        "objectId": "19c16d44-8fab-456c-9577-ab2c6506273c",
+                        "permissions": {
+                            "keys": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "Delete"
+                            ],
+                            "secrets": [
+                                "Get",
+                                "List",
+                                "Set",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore"
+                            ],
+                            "certificates": [
+                                "Get",
+                                "List",
+                                "Update",
+                                "Create",
+                                "Import",
+                                "Delete",
+                                "Recover",
+                                "Backup",
+                                "Restore",
+                                "ManageContacts",
+                                "ManageIssuers",
+                                "GetIssuers",
+                                "ListIssuers",
+                                "SetIssuers",
+                                "DeleteIssuers"
+                            ]
+                        }
+                    }
+                ],
+                "enabledForDeployment": false,
+                "enabledForDiskEncryption": false,
+                "enabledForTemplateDeployment": true,
+                "enableSoftDelete": true
+            }
+        },
+        {
             "type": "Microsoft.Web/serverfarms",
             "apiVersion": "2018-02-01",
-            "name": "[parameters('serverfarms_ASP_TimeTracker_API_9685_name')]",
+            "name": "[parameters('serverfarms_TimeTracker_API_plan_name')]",
             "location": "South Central US",
             "sku": {
                 "name": "B1",
@@ -146,7 +231,6 @@
                 "perSiteScaling": false,
                 "maximumElasticWorkerCount": 1,
                 "isSpot": false,
-                "freeOfferExpirationTime": "2020-04-29T22:56:12.0366667",
                 "reserved": true,
                 "isXenon": false,
                 "hyperV": false,
@@ -155,12 +239,57 @@
             }
         },
         {
+            "type": "microsoft.alertsmanagement/smartdetectoralertrules",
+            "apiVersion": "2019-06-01",
+            "name": "[parameters('smartdetectoralertrules_failure_anomalies___timetracker_api_name')]",
+            "location": "global",
+            "dependsOn": [
+                "[resourceId('microsoft.insights/components', parameters('components_TimeTracker_API_name'))]"
+            ],
+            "properties": {
+                "description": "Failure Anomalies notifies you of an unusual rise in the rate of failed HTTP requests or dependency calls.",
+                "state": "Enabled",
+                "severity": "Sev3",
+                "frequency": "PT1M",
+                "detector": {
+                    "id": "FailureAnomaliesDetector",
+                    "name": "Failure Anomalies",
+                    "description": "Detects if your application experiences an abnormal rise in the rate of HTTP requests or dependency calls that are reported as failed. The anomaly detection uses machine learning algorithms and occurs in near real time, therefore there's no need to define a frequency for this signal.<br/></br/>To help you triage and diagnose the problem, an analysis of the characteristics of the failures and related telemetry is provided with the detection. This feature works for any app, hosted in the cloud or on your own servers, that generates request or dependency telemetry - for example, if you have a worker role that calls <a class=\"ext-smartDetecor-link\" href=\\\"https://docs.microsoft.com/azure/application-insights/app-insights-api-custom-events-metrics#trackrequest\\\" target=\\\"_blank\\\">TrackRequest()</a> or <a class=\"ext-smartDetecor-link\" href=\\\"https://docs.microsoft.com/azure/application-insights/app-insights-api-custom-events-metrics#trackdependency\\\" target=\\\"_blank\\\">TrackDependency()</a>.<br/><br/><a class=\"ext-smartDetecor-link\" href=\\\"https://docs.microsoft.com/azure/azure-monitor/app/proactive-failure-diagnostics\\\" target=\\\"_blank\\\">Learn more about Failure Anomalies</a>",
+                    "supportedResourceTypes": [
+                        "ApplicationInsights"
+                    ]
+                },
+                "scope": [
+                    "[resourceId('microsoft.insights/components', parameters('components_TimeTracker_API_name'))]"
+                ],
+                "actionGroups": {
+                    "groupIds": [
+                        "[parameters('actiongroups_application_insights_smart_detection_externalid')]"
+                    ]
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+            "apiVersion": "2020-03-01",
+            "name": "[concat(parameters('databaseAccounts_time_tracker_db_name'), '/', parameters('databaseAccounts_time_tracker_db_name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccounts_time_tracker_db_name'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "time-tracker-db"
+                },
+                "options": {}
+            }
+        },
+        {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2018-11-01",
             "name": "[parameters('sites_TimeTracker_API_name')]",
             "location": "South Central US",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_TimeTracker_API_9685_name'))]"
+                "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_TimeTracker_API_plan_name'))]"
             ],
             "tags": {
                 "hidden-related:/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourcegroups/eys-training-api/providers/Microsoft.Web/serverfarms/TimeTracker-API-plan": "empty"
@@ -180,7 +309,7 @@
                         "hostType": "Repository"
                     }
                 ],
-                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_ASP_TimeTracker_API_9685_name'))]",
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverfarms_TimeTracker_API_plan_name'))]",
                 "reserved": true,
                 "isXenon": false,
                 "hyperV": false,
@@ -219,7 +348,7 @@
                     "hostingstart.html"
                 ],
                 "netFrameworkVersion": "v4.0",
-                "linuxFxVersion": "DOCKER|timetrackeracr.azurecr.io/timetrackerapi:44",
+                "linuxFxVersion": "DOCKER|timetrackeracr.azurecr.io/timetrackerapi:93",
                 "requestTracingEnabled": false,
                 "remoteDebuggingEnabled": false,
                 "remoteDebuggingVersion": "VS2019",
@@ -268,24 +397,6 @@
                 "minTlsVersion": "1.2",
                 "ftpsState": "AllAllowed",
                 "reservedInstanceCount": 0
-            }
-        },
-        {
-            "type": "Microsoft.Web/sites/deployments",
-            "apiVersion": "2018-11-01",
-            "name": "[concat(parameters('sites_TimeTracker_API_name'), '/411585783091551')]",
-            "location": "South Central US",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('sites_TimeTracker_API_name'))]"
-            ],
-            "properties": {
-                "status": 4,
-                "author": "Roberto Mena",
-                "deployer": "VSTS",
-                "message": "{\"type\":\"Deployment\",\"commitId\":\"d252224b76753438a7e291e69d762fdec900657e\",\"buildId\":\"44\",\"releaseId\":\"41\",\"buildNumber\":\"20200401.12\",\"releaseName\":\"Release-41\",\"repoProvider\":\"GitHub\",\"repoName\":\"ioet/time-tracker-backend\",\"collectionUrl\":\"https://dev.azure.com/IOET-DevOps/\",\"teamProject\":\"447d2e98-e1d3-436f-82aa-93e53375248f\",\"slotName\":\"production\"}",
-                "start_time": "2020-04-01T23:18:12.015901Z",
-                "end_time": "2020-04-01T23:18:12.015901Z",
-                "active": true
             }
         },
         {
