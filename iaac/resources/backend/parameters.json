@@ -3,25 +3,31 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sites_TimeTracker_API_name": {
-            "value": "TimeTracker-API"
+            "value": null
         },
-        "serverfarms_ASP_TimeTracker_API_9685_name": {
-            "value": "ASP-TimeTracker-API-9685"
+        "components_TimeTracker_API_name": {
+            "value": null
+        },
+        "vaults_time_tracker_secrets_name": {
+            "value": null
+        },
+        "serverfarms_TimeTracker_API_plan_name": {
+            "value": null
         },
         "registries_TimeTrackerACR_name": {
-            "value": "TimeTrackerACR"
+            "value": null
         },
         "databaseAccounts_time_tracker_db_name": {
-            "value": "time-tracker-db"
+            "value": null
+        },
+        "configurationStores_time_tracker_config_name": {
+            "value": null
         },
         "smartdetectoralertrules_failure_anomalies___timetracker_api_name": {
-            "value": "failure anomalies - timetracker-api"
-        },
-        "components_timetracker_api_externalid": {
-            "value": "/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourceGroups/eys-training-api/providers/microsoft.insights/components/timetracker-api"
+            "value": null
         },
         "actiongroups_application_insights_smart_detection_externalid": {
-            "value": "/subscriptions/ca70c44c-ad7a-4333-a22c-07ebc6a69224/resourceGroups/test2/providers/microsoft.insights/actiongroups/application insights smart detection"
+            "value": null
         }
     }
 }
