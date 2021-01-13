@@ -4,7 +4,6 @@ on:
     branches:
       - develop
       - master
-
 jobs:
   plan:
     name: terraform plan
