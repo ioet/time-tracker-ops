@@ -5,11 +5,6 @@ on:
       - develop
       - master
 
-  push:
-    branches:
-      - develop
-      - master
-
 jobs:
   plan:
     name: terraform plan
