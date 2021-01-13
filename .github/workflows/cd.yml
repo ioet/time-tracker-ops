@@ -1,6 +1,6 @@
 name: "Apply terraform plan"
 on:
-  pull_request:
+  push:
     branches:
       - master
 
