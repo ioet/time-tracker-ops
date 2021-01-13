@@ -1,4 +1,4 @@
-name: "Terraform Validate"
+name: "Validate Template"
 on:
   pull_request:
     branches:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate:
-    name: Terraform Validate
+    name: terraform validate
     runs-on: ubuntu-latest
     env:
       base_path: "terraform/time-tracker/time-tracker-resources"

@@ -1,4 +1,4 @@
-name: "Terraform Plan"
+name: "Planning Changes (check the PR)"
 on:
   pull_request:
     branches:
@@ -6,7 +6,7 @@ on:
 
 jobs:
   plan:
-    name: Terraform Validate - Plan
+    name: terraform plan
     runs-on: ubuntu-latest
     env:
       base_path: "terraform/time-tracker/time-tracker-resources"
