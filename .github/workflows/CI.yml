@@ -5,7 +5,7 @@ on:
       - develop
 
 jobs:
-  validate:
+  terraform:
     name: Terraform Validate Template
     runs-on: ubuntu-latest
     env:
@@ -26,5 +26,11 @@ jobs:
         working-directory: ${{env.base_path}}
 
       - name: Terraform Validate
-        run: terraform validate
+        run: terraform validate  -no-color
         working-directory: ${{env.base_path}}
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -no-color
+        continue-on-error: true
+
