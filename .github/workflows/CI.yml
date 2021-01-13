@@ -37,8 +37,7 @@ jobs:
         working-directory: ${{env.base_path}}
 
       - name: Terraform Plan
-        run: |
-          ls
-          # terraform plan -no-color
+        run:  terraform plan -no-color
+        working-directory: ${{env.base_path}}
         continue-on-error: true
 
