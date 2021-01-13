@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate:
-    name: Terraform Validate
+    name: Terraform Validate Template
     runs-on: ubuntu-latest
     env:
       base_path: "terraform/time-tracker/time-tracker-resources"
