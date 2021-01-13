@@ -19,3 +19,4 @@ jobs:
           terraform_version: 0.13.5
       - name: Terraform init
         run: terraform init
+        working-directory: ${{env.base_path}}
