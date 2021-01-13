@@ -1,0 +1,37 @@
+name: "Validate Template"
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  validate:
+    name: terraform validate
+    runs-on: ubuntu-latest
+    env:
+      base_path: "terraform/time-tracker/time-tracker-resources"
+      ARM_CLIENT_ID: ${{ secrets.APP_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.PASSWORD }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.SUBSCRIPTION }}
+      ARM_TENANT_ID: ${{ secrets.TENANT }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.5
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+      
+      - name: Terraform init
+        run: terraform init
+        working-directory: ${{env.base_path}}
+
+      - name: Terraform Validate
+        run: terraform validate  -no-color
+        working-directory: ${{env.base_path}}
