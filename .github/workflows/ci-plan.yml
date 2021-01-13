@@ -29,10 +29,12 @@ jobs:
         continue-on-error: true
       
       - name: Terraform init
+        id: init
         run: terraform init
         working-directory: ${{env.base_path}}
 
       - name: Terraform Validate
+        id: validate
         run: terraform validate  -no-color
         working-directory: ${{env.base_path}}
 

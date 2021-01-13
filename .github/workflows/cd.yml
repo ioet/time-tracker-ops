@@ -1,8 +1,8 @@
-name: "Validate Template"
+name: "Apply terraform plan"
 on:
   pull_request:
     branches:
-      - develop
+      - master
 
 jobs:
   validate:
@@ -29,10 +29,11 @@ jobs:
         continue-on-error: true
       
       - name: Terraform init
+        id: init
         run: terraform init
         working-directory: ${{env.base_path}}
 
-      - name: Terraform Validate
+      - name: Terraform Apply
         id: apply
         run: terraform apply  -no-color
         working-directory: ${{env.base_path}}
@@ -40,18 +41,17 @@ jobs:
       - uses: actions/github-script@0.9.0
         if: github.event_name == 'pull_request'
         env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
+          APPLY: "terraform\n${{ steps.apply.outputs.stdout }}"
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
             #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
-            #### Terraform Validation 🤖${{ steps.validate.outputs.stdout }}
-            #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`
+            #### Terraform Apply 📖\`${{ steps.apply.outcome }}\`
             
-            <details><summary>Show Plan</summary>
+            <details><summary>Show Apply</summary>
             
-            \`\`\`${process.env.PLAN}\`\`\`
+            \`\`\`${process.env.APPLY}\`\`\`
             
             </details>
             
