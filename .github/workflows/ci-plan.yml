@@ -5,7 +5,7 @@ on:
       - develop
 
 jobs:
-  terraform:
+  plan:
     name: Terraform Validate - Plan
     runs-on: ubuntu-latest
     env:
