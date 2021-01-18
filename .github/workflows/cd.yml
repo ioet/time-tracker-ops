@@ -5,8 +5,8 @@ on:
       - master
 
 jobs:
-  validate:
-    name: terraform validate
+  apply:
+    name: terraform apply
     runs-on: ubuntu-latest
     env:
       base_path: "terraform/time-tracker/time-tracker-resources"
